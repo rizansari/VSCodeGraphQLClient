@@ -1,0 +1,51 @@
+{
+  "name": "graphql-client",
+  "displayName": "GraphQL Client",
+  "description": "A simple GraphQL client",
+  "version": "1.0.0",
+  "publisher": "RizwanAnsari",
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "graphql-client.execute",
+        "title": "Execute GraphQL Query"
+      }
+    ],
+    "languages": [
+      {
+        "id": "graphql",
+        "extensions": [".gql", ".graphql"],
+        "aliases": ["GraphQL", "graphql"]
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/vscode": "^1.92.0",
+    "@types/node": "^22.7.5",
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "@typescript-eslint/parser": "^8.8.1",
+    "eslint": "^9.12.0",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "graphql": "^16.9.0",
+    "graphql-request": "^6.1.0"
+  }
+}
