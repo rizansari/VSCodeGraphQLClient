@@ -1,13 +1,19 @@
 import * as vscode from 'vscode';
 
 export class GraphQLCodeLensProvider implements vscode.CodeLensProvider {
+    private _onDidChangeCodeLenses: vscode.EventEmitter<void> = new vscode.EventEmitter<void>();
+    public readonly onDidChangeCodeLenses: vscode.Event<void> = this._onDidChangeCodeLenses.event;
+    
     public provideCodeLenses(document: vscode.TextDocument): vscode.CodeLens[] | Thenable<vscode.CodeLens[]> {
         const codeLenses: vscode.CodeLens[] = [];
         const text = document.getText();
         const queryRegex = /^### (.+)$/gm;
 
+        console.log('GraphQL CodeLens Provider provideCodeLenses called');
+
         let match;
         while ((match = queryRegex.exec(text)) !== null) {
+            console.log('Match found:', match[1]);
             const line = document.lineAt(document.positionAt(match.index).line);
             const range = new vscode.Range(line.range.start, line.range.end);
 
@@ -20,6 +26,8 @@ export class GraphQLCodeLensProvider implements vscode.CodeLensProvider {
             codeLenses.push(codeLens);
         }
 
+        console.log('GraphQL CodeLens Provider provideCodeLenses returning codeLenses:', codeLenses);
+
         return codeLenses;
     }
 
@@ -30,5 +38,9 @@ export class GraphQLCodeLensProvider implements vscode.CodeLensProvider {
         }
         const range = new vscode.Range(startLine + 1, 0, endLine, 0);
         return document.getText(range);
+    }
+
+    public refresh(): void {
+        this._onDidChangeCodeLenses.fire();
     }
 }

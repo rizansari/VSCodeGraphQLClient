@@ -11,6 +11,9 @@
     "Other"
   ],
   "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:graphql"
+  ],
   "contributes": {
     "commands": [
       {
